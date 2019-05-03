@@ -7,6 +7,8 @@ var Task = function(task){
     this.status = task.status;
     this.created_at = new Date();
 };
+
+
 Task.createTask = function createUser(newTask, result) {    
         sql.query("INSERT INTO Tasks set ?", newTask, function (err, res) {
                 
@@ -15,11 +17,12 @@ Task.createTask = function createUser(newTask, result) {
                     result(err, null);
                 }
                 else{
-                    console.log(res.insertId);
+                    console.log("New Task ID: ", res.insertId);
                     result(null, res.insertId);
                 }
             });           
 };
+
 Task.getTaskById = function createUser(taskId, result) {
         sql.query("Select task from Tasks where id = ? ", taskId, function (err, res) {             
                 if(err) {
@@ -32,6 +35,7 @@ Task.getTaskById = function createUser(taskId, result) {
                 }
             });   
 };
+
 Task.getAllTask = function getAllTask(result) {
         sql.query("Select * from Tasks", function (err, res) {
 
@@ -46,17 +50,18 @@ Task.getAllTask = function getAllTask(result) {
                 }
             });   
 };
+
 Task.updateById = function(id, task, result){
   sql.query("UPDATE Tasks SET task = ? WHERE id = ?", [task.task, id], function (err, res) {
           if(err) {
               console.log("error: ", err);
                 result(null, err);
-             }
-           else{   
+          }  else {   
              result(null, res);
-                }
-            }); 
+          }
+ }); 
 };
+
 Task.remove = function(id, result){
      sql.query("DELETE FROM Tasks WHERE id = ?", [id], function (err, res) {
 
@@ -65,7 +70,7 @@ Task.remove = function(id, result){
                     result(null, err);
                 }
                 else{
-               
+		console.log("Delete Successfully!!!");
                  result(null, res);
                 }
             }); 
